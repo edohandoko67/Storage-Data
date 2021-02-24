@@ -1,54 +1,56 @@
 package com.example.myapplication;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class showData extends RecyclerView.Adapter<showData.MyViewHolder> {
-    private Context context;
-    private ArrayList<UseHelpers>dataMhs;
+public class showData extends AppCompatActivity {
 
-    public showData(Context cont, ArrayList<UseHelpers>data){
-        context = cont;
-        dataMhs = data;
-    }
-    @NonNull
-    @Override    
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mhs, parent,false); //convert layout
-        return new MyViewHolder(view);
-    }
+    private RecyclerView listMahasiswaView;
+    private RecyclerviewAdapter recyclerviewAdapter;
+    DatabaseReference mhsReference;
+    ArrayList<UseHelpers> listMhs = new ArrayList<>();
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nama.setText(dataMhs.get(position).getNama());
-        holder.nim.setText(dataMhs.get(position).getNim());
-        holder.alamat.setText(dataMhs.get(position).getAlamat());
-        holder.umur.setText(dataMhs.get(position).getUmur());
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.showdata);
+        listMahasiswaView = (RecyclerView) findViewById(R.id.list_mahasiswa);
+        listMahasiswaView.setHasFixedSize(true);
+        listMahasiswaView.setLayoutManager(new LinearLayoutManager(this));
 
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView nama,nim,alamat,umur;
+        mhsReference = FirebaseDatabase.getInstance().getReference().child("Mahasiswa");
+        mhsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    UseHelpers single = dataSnapshot.getValue(UseHelpers.class);
+                    listMhs.add(single);
+                }
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nama = itemView.findViewById(R.id.hasilNama);
-            nim = itemView.findViewById(R.id.hasilNim);
-            alamat = itemView.findViewById(R.id.hasilAlamat);
-            umur = itemView.findViewById(R.id.hasilUmur);
-        }
+                recyclerviewAdapter = new RecyclerviewAdapter(showData.this, listMhs);
+                listMahasiswaView.setAdapter(recyclerviewAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
-    
 }
+

@@ -3,20 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Data Mahasiswa"
-        android:textSize="28sp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:layout_margin="5dp">
-    </TextView>
     <androidx.cardview.widget.CardView
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -36,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="NIM :"/>
             <TextView
-                android:id="@+id/hasilNim"
+                android:id="@+id/hasilNim2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -48,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="Nama Lengkap :"/>
             <TextView
-                android:id="@+id/hasilNama"
+                android:id="@+id/hasilNama2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="Umur :"/>
             <TextView
-                android:id="@+id/hasilUmur"
+                android:id="@+id/hasilUmur2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="Alamat :"/>
             <TextView
-                android:id="@+id/hasilAlamat"
+                android:id="@+id/hasilAlamat2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
